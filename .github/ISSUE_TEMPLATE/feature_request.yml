@@ -1,0 +1,25 @@
+name: Feature request
+description: Ask for something new in Bramble Office. Others can vote for it with a 👍.
+labels: ["feature-request"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What should Bramble do?
+      description: Describe the feature in a sentence or two. This shows on the features page.
+    validations:
+      required: true
+  - type: dropdown
+    id: apps
+    attributes:
+      label: Which apps?
+      multiple: true
+      options:
+        - Keydeck
+        - Values
+        - Cardstock
+        - All of them
+  - type: textarea
+    id: why
+    attributes:
+      label: Why would it help you?

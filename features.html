@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Vote on what Bramble Office builds next, or request a new feature.">
+<link rel="icon" href="logo/bramble-mark.svg" type="image/svg+xml">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Bramble Features</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Same black stage as index.html: the feature list with votes from GitHub issues. */
+:root {
+  --bg: #000;
+  --bg-2: #0a0a0b;
+  --tile: #141416;
+  --tile-2: #1c1c1f;
+  --text: #f5f5f7;
+  --soft: #a1a1a6;
+  --dim: #6e6e73;
+  --line: rgba(255,255,255,.1);
+  --warm-a: #ff7a3d;
+  --warm-b: #ffc560;
+  --leaf: #7fb069;
+  --r: 12px;
+  --display: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Instrument Serif", Georgia, serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font: 400 1.0625rem/1.55 var(--display); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 900px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2 { font-family: var(--display); font-weight: 600; letter-spacing: -0.035em; line-height: 1.02; margin: 0; text-wrap: balance; }
+em.s { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--warm-b); outline-offset: 3px; border-radius: var(--r); }
+.idx { font: 500 .72rem/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--dim); display: inline-flex; gap: 12px; }
+.idx b { font-weight: 500; color: var(--warm-b); }
+.caption { font: 400 .78rem/1.4 var(--mono); color: var(--dim); }
+
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: rgba(0,0,0,.72); backdrop-filter: saturate(180%) blur(18px); -webkit-backdrop-filter: saturate(180%) blur(18px); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; gap: 22px; height: 52px; max-width: 1120px; }
+.brand { display: flex; align-items: center; gap: 9px; text-decoration: none; font-weight: 600; font-size: 1.02rem; letter-spacing: -0.01em; }
+.brand svg { width: 20px; height: 26px; --ink: var(--text); --gap: #000; }
+.pill { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: var(--r); font: 500 1rem/1 var(--display); text-decoration: none; border: 0; cursor: pointer; transition: transform .2s, background .2s; white-space: nowrap; }
+.pill.solid { background: var(--text); color: #000; }
+.pill.solid:hover { background: #fff; transform: scale(1.03); }
+.pill.ghost { color: var(--text); background: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.3); }
+.pill.ghost:hover { box-shadow: inset 0 0 0 1px rgba(255,255,255,.7); }
+.pill.small { padding: 7px 14px; font-size: .82rem; }
+.nav .pill { margin-left: auto; }
+
+.hero { position: relative; text-align: center; padding-block: clamp(56px, 9vw, 120px) 32px; display: grid; justify-items: center; gap: 22px; }
+.hero::before { content: ""; position: absolute; inset: -30% -20% auto; height: 600px; z-index: -1; pointer-events: none;
+  background: radial-gradient(40% 40% at 50% 42%, rgba(255,122,61,.2), transparent 70%), radial-gradient(30% 30% at 30% 60%, rgba(127,176,105,.12), transparent 70%); }
+.hero h1 { font-size: clamp(2.6rem, 1.2rem + 5.6vw, 5.6rem); max-width: 14ch; }
+.sub { color: var(--soft); max-width: 50ch; font-size: clamp(1.05rem, 1rem + .35vw, 1.25rem); line-height: 1.5; }
+
+/* the list */
+.bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 24px; }
+.seg { display: inline-flex; padding: 3px; border-radius: var(--r); background: var(--tile); }
+.seg button { font: 500 .82rem/1 var(--display); color: var(--soft); background: none; border: 0; padding: 8px 14px; border-radius: 9px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--tile-2); color: var(--text); }
+.list { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 12px; }
+.item { background: var(--tile); border-radius: var(--r); padding: 20px 22px; display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 18px; align-items: center; }
+.votes { display: grid; justify-items: center; gap: 4px; }
+.votes .n { font-size: 1.7rem; font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
+.votes .u { font: 500 .62rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
+.body { display: grid; gap: 6px; min-width: 0; }
+.body .top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.body b { font-weight: 600; font-size: 1.15rem; letter-spacing: -0.01em; }
+.body span.d { color: var(--soft); font-size: .95rem; line-height: 1.45; overflow-wrap: anywhere; }
+.tag { font: 500 .64rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; padding: 5px 8px; border-radius: var(--r); background: var(--tile-2); color: var(--warm-b); }
+.tag.planned { color: var(--leaf); }
+.tag.doing { color: var(--warm-a); }
+.note { margin-top: 14px; }
+
+/* request */
+.ask { margin-block: clamp(56px, 8vw, 96px); border-radius: var(--r); padding: clamp(32px, 6vw, 64px) clamp(20px, 5vw, 56px); background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--line); display: grid; gap: 18px; }
+.ask h2 { font-size: clamp(2rem, 1.2rem + 3vw, 3.4rem); }
+.ask form { display: flex; gap: 10px; flex-wrap: wrap; }
+.ask input { flex: 1 1 260px; min-width: 0; font: 400 1rem/1.2 var(--display); color: var(--text); background: var(--tile); border: 0; box-shadow: inset 0 0 0 1px var(--line); border-radius: var(--r); padding: 12px 14px; }
+.ask input::placeholder { color: var(--dim); }
+.ask ol { margin: 0; padding-left: 1.2em; color: var(--soft); display: grid; gap: 6px; }
+
+footer { border-top: 1px solid var(--line); padding-block: 32px 56px; color: var(--dim); font-size: .8rem; line-height: 1.6; }
+
+@media (max-width: 600px) {
+  .item { grid-template-columns: 48px minmax(0, 1fr); }
+  .item .pill { grid-column: 1 / -1; justify-self: start; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="berry" viewBox="0 0 597 777"><path fill="var(--leafc,var(--ink,#111))" d="M272.4 167.5C253.5 164.7 234.0 157.5 219.9 148.0C206.4 138.9 191.7 122.3 184.5 108.0C178.4 95.9 173.6 77.8 171.0 56.6C169.9 47.5 169.4 7.3 170.4 6.2C171.2 5.4 198.5 12.6 216.0 18.2C253.7 30.4 272.3 40.2 288.6 56.4C301.2 68.9 309.2 83.2 312.6 98.9C315.7 113.8 313.6 142.6 308.5 154.5C307.0 158.1 306.7 158.3 305.7 156.6C284.1 121.6 259.8 94.5 224.8 66.1C220.5 62.7 217.0 60.1 217.0 60.4C217.0 60.7 221.5 66.5 227.1 73.2C250.7 102.0 271.7 131.9 283.9 154.5C287.8 161.6 291.0 167.8 291.0 168.2C291.0 169.3 282.9 169.0 272.4 167.5Z"/><path fill="var(--ink,#111)" d="M288.5 770.0C271.0 766.3 252.1 754.6 241.5 741.1C238.9 737.7 236.6 735.0 236.4 735.0C236.3 735.0 233.1 735.7 229.3 736.7C219.8 739.0 201.8 739.0 191.5 736.6C166.2 730.8 143.7 712.2 132.5 687.8C129.6 681.5 126.5 669.3 125.5 660.8C125.0 656.1 124.5 655.0 123.0 655.0C119.7 655.0 106.6 648.9 98.5 643.5C80.2 631.4 66.8 611.5 62.4 590.0C61.1 583.5 60.8 578.7 61.3 569.5L61.8 557.5L55.8 554.0C42.7 546.5 30.6 532.7 23.0 516.9C17.1 504.6 15.0 495.0 15.0 481.1C15.0 465.7 18.2 452.7 24.6 441.1L27.0 436.7L23.1 431.6C17.2 423.8 14.4 418.4 11.1 408.5C5.3 391.0 5.0 372.1 10.2 355.0C15.1 339.1 27.3 321.2 39.6 311.9L45.5 307.5L43.6 301.0C40.8 291.5 41.0 270.4 43.9 259.6C52.0 229.4 76.9 205.2 107.8 197.4C124.5 193.2 145.4 194.3 161.9 200.4L168.3 202.7L175.9 197.2C184.9 190.8 192.1 187.0 201.0 184.2C213.7 180.2 218.4 179.5 232.0 179.6C254.5 179.7 270.6 185.2 288.4 198.7C293.2 202.5 297.8 205.9 298.4 206.4C299.3 207.0 301.8 205.6 306.1 202.1C321.1 189.9 334.8 183.4 351.7 180.5C376.7 176.1 404.1 182.6 421.8 197.0L428.1 202.2L436.4 199.1C474.5 185.4 512.6 195.6 537.4 226.4C546.1 237.2 550.5 246.1 554.2 260.1C557.0 270.8 557.2 289.1 554.7 299.3L553.0 306.2L555.7 308.3C567.2 317.1 577.3 329.4 583.1 341.5C589.4 354.5 591.3 363.3 591.3 379.0C591.2 398.9 587.4 411.4 576.6 427.4L571.9 434.3L576.5 443.4C582.6 455.6 585.0 465.6 585.0 478.6C585.0 501.9 577.2 521.1 560.6 538.7C556.5 543.0 550.0 548.5 546.1 551.0L539.0 555.5L539.7 563.5C541.8 588.3 536.6 609.5 524.4 626.1C518.5 634.1 505.9 645.2 496.9 650.2C486.2 656.2 486.0 656.4 486.0 660.9C486.0 671.2 478.2 691.4 469.5 703.5C450.2 730.6 412.2 744.7 381.9 736.0C380.0 735.4 378.2 735.0 377.9 735.0C377.6 735.0 375.2 737.7 372.6 741.0C363.0 753.2 347.0 763.7 330.5 768.5C318.1 772.2 301.3 772.8 288.5 770.0Z"/></symbol></defs></svg>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><svg viewBox="0 0 597 777" aria-hidden="true"><use href="#berry"/></svg>Bramble Office</a>
+    <a class="pill ghost small" href="index.html#next">Back to the site</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap" style="display:grid;justify-items:center;gap:22px">
+      <span class="idx"><b>11</b> Feature requests</span>
+      <h1>Vote on what <em class="s">comes next</em>.</h1>
+      <p class="sub">Each feature is a GitHub issue. Give it a 👍 on GitHub to vote, and the most wanted features rise to the top here.</p>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="listhead">
+    <div class="bar">
+      <h2 id="listhead" class="idx"><b>All</b> features</h2>
+      <div class="seg" role="group" aria-label="Sort">
+        <button type="button" data-sort="votes" aria-pressed="true">Most votes</button>
+        <button type="button" data-sort="new" aria-pressed="false">Newest</button>
+      </div>
+    </div>
+    <ul class="list" id="list"></ul>
+    <p class="caption note" id="status">Loading votes…</p>
+  </section>
+
+  <section class="wrap" id="ask">
+    <div class="ask">
+      <span class="idx"><b>+</b> Request a feature</span>
+      <h2>Something <em class="s">missing</em>?</h2>
+      <p class="sub" style="max-width:60ch">Describe it in a few words. This opens a new feature request on GitHub, where you can add details and others can vote for it.</p>
+      <form id="askForm">
+        <label for="askTitle" hidden>Feature name</label>
+        <input id="askTitle" type="text" maxlength="120" placeholder="e.g. Export slides as a video" autocomplete="off">
+        <button class="pill solid" type="submit">Continue on GitHub</button>
+      </form>
+      <ol>
+        <li>Voting and requests need a free GitHub account.</li>
+        <li>Check the list above first. If it's already there, a 👍 counts more than a new copy.</li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Bramble Office is an independent project, not affiliated with Apple Inc. or Microsoft Corporation. Features listed here are ideas being considered, not promises.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var REPO = 'bramble-apps/bramble-apps.github.io', LABEL = 'feature-request';
+  var NEW = 'https://github.com/' + REPO + '/issues/new?template=feature_request.yml&title=';
+  // features shown before their GitHub issue exists; matched to issues by title
+  var SEED = [
+    { title: 'Community extensions', d: 'Add tools from other people to the toolbar, such as grammar checkers, translators and AI writing helpers. Drag, hide or remove them like any other button.' },
+    { title: 'Android app', d: 'Keydeck, Values and Cardstock on Android phones and tablets, opening the same files as the desktop apps. It doubles as a remote, so you can run a presentation on your computer from your phone and see your notes and the next slide.' }
+  ];
+  var list = document.getElementById('list'), status = document.getElementById('status'), items = [], sort = 'votes';
+
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function key(t) { return t.trim().toLowerCase(); }
+  // the first plain paragraph of an issue (issue forms start with "### Question" headings)
+  function summary(body) {
+    var paras = (body || '').split(/\n\s*\n/).map(function (p) { return p.trim(); })
+      .filter(function (p) { return p && !/^#{1,6}\s/.test(p) && p !== '_No response_'; });
+    var t = (paras[0] || '').replace(/[*_`>#\[\]]/g, '').replace(/\s+/g, ' ');
+    return t.length > 220 ? t.slice(0, 217) + '…' : t;
+  }
+  function stage(labels) {
+    var names = labels.map(function (l) { return key(l.name || ''); });
+    if (names.indexOf('done') >= 0) return ['Done', 'planned'];
+    if (names.indexOf('in progress') >= 0) return ['In progress', 'doing'];
+    if (names.indexOf('planned') >= 0) return ['Planned', 'planned'];
+    return ['Potential', ''];
+  }
+
+  function render() {
+    var rows = items.slice().sort(function (a, b) {
+      if (sort === 'new') return b.at - a.at;
+      return (b.votes || 0) - (a.votes || 0) || a.title.localeCompare(b.title);
+    });
+    list.textContent = '';
+    rows.forEach(function (f) {
+      var li = el('li', 'item'), v = el('div', 'votes'), body = el('div', 'body'), top = el('div', 'top');
+      v.appendChild(el('span', 'n', f.votes == null ? '–' : String(f.votes)));
+      v.appendChild(el('span', 'u', f.votes === 1 ? 'vote' : 'votes'));
+      top.appendChild(el('b', null, f.title));
+      top.appendChild(el('span', 'tag ' + f.stage[1], f.stage[0]));
+      body.appendChild(top);
+      if (f.d) body.appendChild(el('span', 'd', f.d));
+      var a = el('a', 'pill ghost small', '👍 Vote on GitHub');
+      a.href = f.url; a.target = '_blank'; a.rel = 'noopener';
+      a.setAttribute('aria-label', 'Vote for ' + f.title + ' on GitHub');
+      li.appendChild(v); li.appendChild(body); li.appendChild(a);
+      list.appendChild(li);
+    });
+  }
+
+  function useSeedOnly(msg) {
+    items = SEED.map(function (s, i) { return { title: s.title, d: s.d, votes: null, stage: ['Potential', ''], url: NEW + encodeURIComponent(s.title), at: -i }; });
+    status.textContent = msg; render();
+  }
+
+  function useIssues(issues) {
+    var byTitle = {};
+    items = issues.filter(function (i) { return !i.pull_request; }).map(function (i) {
+      var f = { title: i.title, d: summary(i.body), votes: (i.reactions && i.reactions['+1']) || 0, stage: stage(i.labels || []), url: i.html_url, at: Date.parse(i.created_at) || 0 };
+      byTitle[key(i.title)] = f; return f;
+    });
+    SEED.forEach(function (s, i) {
+      var f = byTitle[key(s.title)];
+      if (f) { f.d = s.d; return; }
+      items.push({ title: s.title, d: s.d, votes: 0, stage: ['Potential', ''], url: NEW + encodeURIComponent(s.title), at: -i });
+    });
+    status.textContent = 'Votes are 👍 reactions on each GitHub issue. Counts can take a few minutes to update here.';
+    render();
+  }
+
+  // cache for ten minutes: GitHub allows 60 unauthenticated requests an hour per visitor
+  var CK = 'bramble-features-v1', cached = null;
+  try { cached = JSON.parse(sessionStorage.getItem(CK) || 'null'); } catch (e) {}
+  if (cached && Date.now() - cached.t < 600000) {
+    useIssues(cached.issues);
+  } else {
+    useSeedOnly('Loading votes…');
+    fetch('https://api.github.com/repos/' + REPO + '/issues?state=open&per_page=100&labels=' + LABEL, { headers: { Accept: 'application/vnd.github+json' } })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (issues) {
+        try { sessionStorage.setItem(CK, JSON.stringify({ t: Date.now(), issues: issues })); } catch (e) {}
+        useIssues(issues);
+      })
+      .catch(function () { useSeedOnly("Couldn't load the vote counts right now. You can still vote on GitHub."); });
+  }
+
+  document.querySelectorAll('.seg button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      sort = b.dataset.sort;
+      document.querySelectorAll('.seg button').forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+      render();
+    });
+  });
+  document.getElementById('askForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var t = document.getElementById('askTitle').value.trim();
+    window.open(NEW + encodeURIComponent(t), '_blank', 'noopener');
+  });
+})();
+</script>
+</body>
+</html>
