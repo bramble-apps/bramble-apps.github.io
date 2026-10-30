@@ -213,6 +213,17 @@ section.band { padding-block: clamp(80px, 11vw, 160px); }
 .get::before { content: ""; position: absolute; inset: 30% -10% -40%; background: radial-gradient(40% 50% at 50% 50%, rgba(224,51,111,.35), transparent 70%); pointer-events: none; }
 .get > * { position: relative; }
 .get svg.mark { width: 80px; height: 104px; --ink: var(--text); --gap: var(--bg-2); }
+.get .big-dl { margin-top: 10px; padding: 16px 30px; font-size: 1.1rem; }
+.get .dl-note { margin: 12px 0 0; color: var(--muted, #a1a1a6); font-size: .85rem; }
+.dl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; max-width: 900px; margin: 40px auto 0; text-align: left; }
+.dl-card { background: var(--tile-2, #1c1c1f); border-radius: var(--r); padding: 22px; box-shadow: inset 0 0 0 1px var(--line); display: flex; flex-direction: column; gap: 10px; transition: box-shadow .2s; }
+.dl-card.mine { box-shadow: inset 0 0 0 1.5px var(--warm-a); }
+.dl-card h3 { margin: 0; font: 600 1.15rem/1.2 var(--display); }
+.dl-card p { margin: 0 0 6px; color: var(--muted, #a1a1a6); font-size: .88rem; }
+.dl-card .pill { justify-content: center; }
+.dl-alt { color: var(--warm-b); font-size: .85rem; text-decoration: none; margin-top: 2px; }
+.dl-links { margin-top: 28px; font-size: .9rem; }
+.dl-links a { color: var(--warm-b); text-decoration: none; }
 
 footer { border-top: 1px solid var(--line); padding-block: 36px 64px; color: var(--dim); font-size: .8rem; line-height: 1.6; }
 footer .wrap { display: grid; gap: 12px; }
@@ -529,8 +540,28 @@ footer strong { color: var(--soft); font-weight: 600; }
       <div class="get center reveal">
         <svg class="mark" viewBox="0 0 597 777" aria-hidden="true"><use href="#berry"/></svg>
         <h2 class="big">Linux, Windows <em class="s">and</em> macOS.</h2>
-        <p class="sub">All three apps run on Linux, Windows and macOS. The first builds are being shared privately for now; public downloads will be listed here when they're ready.</p>
-        <a class="pill solid" href="#top">Back to the top</a>
+        <p class="sub">Free and open source. Keydeck, Values and Letters, for every desktop.</p>
+        <a class="pill solid big-dl" id="dl-main" href="https://github.com/bramble-apps/bramble-office/releases/latest">Download Bramble Office</a>
+        <p class="dl-note" id="dl-note">Version 0.1 · GPL-3.0 · no account needed</p>
+        <div class="dl-grid">
+          <div class="dl-card" data-os="windows">
+            <h3>Windows</h3><p>Windows 10 and 11, 64-bit</p>
+            <a class="pill ghost" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Bramble-Office-windows-x86_64.zip">Download .zip</a>
+          </div>
+          <div class="dl-card" data-os="mac">
+            <h3>macOS</h3><p>Apple silicon (M1 and later) or Intel</p>
+            <a class="pill ghost" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Bramble-Office-macos-apple-silicon.zip">Apple silicon</a>
+            <a class="pill ghost" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Bramble-Office-macos-intel.zip">Intel</a>
+          </div>
+          <div class="dl-card" data-os="linux">
+            <h3>Linux</h3><p>AppImages, one per app, x86_64</p>
+            <a class="pill ghost" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Keydeck-x86_64.AppImage">Keydeck</a>
+            <a class="pill ghost" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Values-x86_64.AppImage">Values</a>
+            <a class="pill ghost" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Letters-x86_64.AppImage">Letters</a>
+            <a class="dl-alt" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Bramble-Office-linux-x86_64.tar.gz">or all three as a .tar.gz</a>
+          </div>
+        </div>
+        <p class="dl-links"><a href="https://github.com/bramble-apps/bramble-office#installing-and-first-launch">Installing and first launch</a> · <a href="https://github.com/bramble-apps/bramble-office/releases">All releases</a> · <a href="https://github.com/bramble-apps/bramble-office">Source code</a></p>
       </div>
     </div>
   </section>
@@ -663,5 +694,23 @@ footer strong { color: var(--soft); font-weight: 600; }
 })();
 </script>
 
+
+<script>
+// the download button picks the visitor's system
+(function () {
+  var B = "https://github.com/bramble-apps/bramble-office/releases/latest/download/";
+  var ua = navigator.userAgent, os = /Windows/.test(ua) ? "windows" : /Mac OS X|Macintosh/.test(ua) ? "mac" : /Linux|X11/.test(ua) && !/Android/.test(ua) ? "linux" : null;
+  var main = document.getElementById("dl-main"), note = document.getElementById("dl-note");
+  if (!os || !main) return;
+  var card = document.querySelector('.dl-card[data-os="' + os + '"]');
+  if (card) card.classList.add("mine");
+  if (os === "windows") { main.href = B + "Bramble-Office-windows-x86_64.zip"; main.textContent = "Download for Windows"; }
+  if (os === "linux") { main.href = B + "Bramble-Office-linux-x86_64.tar.gz"; main.textContent = "Download for Linux"; note.textContent = "All three apps · or pick an AppImage below"; }
+  if (os === "mac") {
+    main.href = B + "Bramble-Office-macos-apple-silicon.zip"; main.textContent = "Download for Mac";
+    note.textContent = "For Apple silicon Macs · Intel Mac? Use the Intel download below";
+  }
+})();
+</script>
 </body>
 </html>
