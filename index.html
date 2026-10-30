@@ -197,6 +197,13 @@ section.band { padding-block: clamp(80px, 11vw, 160px); }
 .faq details[open] summary::after { transform: rotate(45deg); }
 .faq details p { padding: 0 4px 24px; color: var(--soft); max-width: 66ch; }
 
+/* what's next: planned and possible features, voted on in features.html */
+.next { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 56px; width: 100%; text-align: left; }
+.ncard { background: var(--tile); border-radius: var(--r); padding: 28px 26px; display: grid; gap: 12px; align-content: start; }
+.ncard b { font-weight: 600; font-size: 1.2rem; letter-spacing: -0.01em; }
+.ncard span { color: var(--soft); font-size: .95rem; line-height: 1.45; }
+.tag { justify-self: start; font: 500 .68rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; padding: 6px 9px; border-radius: var(--r); background: var(--tile-2); color: var(--warm-b); }
+
 /* get */
 .get { position: relative; border-radius: var(--r); padding: clamp(48px, 8vw, 110px) 24px; overflow: hidden; background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--line); }
 .get::before { content: ""; position: absolute; inset: 30% -10% -40%; background: radial-gradient(40% 50% at 50% 50%, rgba(255,122,61,.35), transparent 70%); pointer-events: none; }
@@ -267,7 +274,7 @@ footer strong { color: var(--soft); font-weight: 600; }
 
 @media (max-width: 1380px) { .rail { display: none; } }
 @media (max-width: 900px) {
-  .suite, .formats, .cards { grid-template-columns: minmax(0, 1fr); }
+  .suite, .formats, .cards, .next { grid-template-columns: minmax(0, 1fr); }
   .tiles, .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .themes { grid-template-columns: minmax(0, 1fr); }
   .navlinks { display: none; }
@@ -289,13 +296,13 @@ footer strong { color: var(--soft); font-weight: 600; }
 <header class="nav">
   <div class="wrap">
     <a class="brand" href="#top"><svg viewBox="0 0 597 777" aria-hidden="true"><use href="#berry"/></svg>Bramble Office</a>
-    <nav class="navlinks" aria-label="Sections"><a href="#apps">Apps</a><a href="#formats">Formats</a><a href="#deep">Features</a><a href="#themes">Themes</a><a href="#faq">FAQ</a></nav>
+    <nav class="navlinks" aria-label="Sections"><a href="#apps">Apps</a><a href="#formats">Formats</a><a href="#deep">Features</a><a href="#themes">Themes</a><a href="#faq">FAQ</a><a href="features.html">Vote</a></nav>
     <a class="pill solid small" href="#get">Get it</a>
   </div>
 </header>
 
 <nav class="rail" aria-label="On this page">
-  <a href="#top" data-sec="top">00 Intro</a><a href="#apps" data-sec="apps">01 Apps</a><a href="#keydeck" data-sec="keydeck">02 Keydeck</a><a href="#values" data-sec="values">03 Values</a><a href="#cardstock" data-sec="cardstock">04 Cardstock</a><a href="#formats" data-sec="formats">05 Formats</a><a href="#deep" data-sec="deep">06 Deep end</a><a href="#themes" data-sec="themes">07 Themes</a><a href="#faq" data-sec="faq">10 FAQ</a>
+  <a href="#top" data-sec="top">00 Intro</a><a href="#apps" data-sec="apps">01 Apps</a><a href="#keydeck" data-sec="keydeck">02 Keydeck</a><a href="#values" data-sec="values">03 Values</a><a href="#cardstock" data-sec="cardstock">04 Cardstock</a><a href="#formats" data-sec="formats">05 Formats</a><a href="#deep" data-sec="deep">06 Deep end</a><a href="#themes" data-sec="themes">07 Themes</a><a href="#faq" data-sec="faq">10 FAQ</a><a href="#next" data-sec="next">11 Next</a>
 </nav>
 
 <main>
@@ -454,7 +461,7 @@ footer strong { color: var(--soft); font-weight: 600; }
             <div class="sw" style="--n:1"><i style="--c:#3a82f7"></i>Default</div><div class="sw" style="--n:2"><i style="--c:#3F51B5"></i>Indigo</div><div class="sw" style="--n:3"><i style="--c:#0277BD"></i>Ocean</div><div class="sw" style="--n:4"><i style="--c:#2E7D32"></i>Forest</div><div class="sw" style="--n:5"><i style="--c:#EF6C00"></i>Sunset</div><div class="sw" style="--n:6"><i style="--c:#C2185B"></i>Rose</div><div class="sw" style="--n:7"><i style="--c:#7E57C2"></i>Lavender</div>
             <div class="sw" style="--n:8"><i style="--c:#C62828"></i>Crimson</div><div class="sw" style="--n:9"><i style="--c:#00897B"></i>Teal</div><div class="sw" style="--n:10"><i style="--c:#8D6E63"></i>Sand</div><div class="sw" style="--n:11"><i style="--c:#546E7A"></i>Slate</div><div class="sw" style="--n:12"><i style="--c:#1A237E"></i>Midnight</div><div class="sw" style="--n:13"><i style="--c:#616161"></i>Graphite</div>
           </div>
-          <ul><li>Tinted, feathered or plain toolbars</li><li>A classic look if you prefer it</li><li>The system title bar or Bramble's own</li></ul>
+          <ul><li>Tinted, feathered or plain toolbars</li><li>A classic look if you prefer it</li><li>Liquid glass buttons that catch the light, or solid ones</li></ul>
         </div>
       </div>
     </div>
@@ -497,6 +504,20 @@ footer strong { color: var(--soft); font-weight: 600; }
         <details><summary>Is this made by Apple?</summary><p>No. Bramble Office is an independent project with no connection to Apple. It works with Apple's file formats so people on Linux can open and share them.</p></details>
         <details><summary>Is everything finished?</summary><p>Not yet. Some features are still in progress, and each app keeps a list of what works and what's coming.</p></details>
       </div>
+    </div>
+  </section>
+
+  <section class="band" id="next" style="padding-top:0">
+    <div class="wrap center reveal">
+      <span class="idx"><b>11</b> What's next</span>
+      <h2 class="big">Help pick what <em class="s">comes next</em>.</h2>
+      <p class="sub">These are features being planned or considered. Vote for the ones you want, or ask for something new.</p>
+      <div class="next">
+        <div class="ncard tilt"><span class="tag">Potential</span><b>Community extensions</b><span>Add tools from other people to the toolbar, such as grammar checkers, translators and AI writing helpers. Drag, hide or remove them like any other button.</span></div>
+        <div class="ncard tilt"><span class="tag">Potential</span><b>Android app</b><span>Keydeck, Values and Cardstock on Android phones and tablets, opening the same files as the desktop apps.</span></div>
+        <div class="ncard tilt"><span class="tag">Potential</span><b>Phone remote</b><span>Control a presentation running on your computer from the Android app: change slides and see your notes and the next slide.</span></div>
+      </div>
+      <div class="ctas" style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:12px"><a class="pill solid" href="features.html">See all and vote</a><a class="pill ghost" href="features.html#ask">Request a feature</a></div>
     </div>
   </section>
 
