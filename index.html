@@ -41,7 +41,8 @@ em.s { font-family: var(--serif); font-style: italic; font-weight: 400; letter-s
 p { margin: 0; }
 a { color: inherit; }
 :focus-visible { outline: 2px solid var(--warm-b); outline-offset: 3px; border-radius: var(--r); }
-.warm { background: linear-gradient(100deg, var(--warm-a), var(--warm-b)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+/* the padding lets the gradient reach italic letters that lean past their box (the "e" of "home"); the margin takes the space back */
+.warm { background: linear-gradient(100deg, var(--warm-a), var(--warm-b)); -webkit-background-clip: text; background-clip: text; color: transparent; padding-inline: .12em; margin-inline: -.12em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 .idx { font: 500 .72rem/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--dim); display: inline-flex; gap: 12px; }
 .idx b { font-weight: 500; color: var(--warm-b); }
 
