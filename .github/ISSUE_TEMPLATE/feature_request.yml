@@ -17,7 +17,7 @@ body:
       options:
         - Keydeck
         - Values
-        - Cardstock
+        - Letters
         - All of them
   - type: textarea
     id: why

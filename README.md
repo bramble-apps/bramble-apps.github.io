@@ -1,6 +1,6 @@
 # Bramble Office website
 
-The landing page for Bramble Office (Keydeck, Values and Cardstock), served by GitHub Pages.
+The landing page for Bramble Office (Keydeck, Values and Letters), served by GitHub Pages.
 
 - `index.html` — the page
 - `features.html` — feature voting; reads open issues labelled `feature-request` from this repo and sorts them by 👍
