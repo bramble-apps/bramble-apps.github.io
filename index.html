@@ -154,8 +154,8 @@ section.band { padding-block: clamp(80px, 11vw, 160px); }
 .remote .screen { border-radius: 14px 14px 4px 4px; background: #0b0b0d; padding: 1.6% 1.6% 2.2%; box-shadow: 0 0 0 1px var(--line), 0 60px 120px -40px var(--glow); }
 .remote .screen img { display: block; width: 100%; height: auto; border-radius: 3px; }
 .remote .base { height: 14px; margin: 0 -5%; border-radius: 0 0 14px 14px; background: linear-gradient(#2a2a2e, #161618); box-shadow: 0 1px 0 rgba(255,255,255,.06) inset; }
-.remote .phone { position: absolute; width: 24%; border-radius: 34px; padding: 9px; background: #18181b; box-shadow: 0 0 0 1px rgba(255,255,255,.14), 0 40px 80px rgba(0,0,0,.75); }
-.remote .phone img { display: block; width: 100%; height: auto; border-radius: 26px; }
+.remote .phone { position: absolute; width: 24%; border-radius: 13% / 6%; padding: 3.4%; background: #18181b; box-shadow: 0 0 0 1px rgba(255,255,255,.14), 0 40px 80px rgba(0,0,0,.75); }
+.remote .phone img { display: block; width: 100%; height: auto; border-radius: 10.5% / 4.85%; }
 .remote .phone.p1 { right: 0; top: 0; z-index: 2; }
 .remote .phones { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; width: 100%; max-width: 860px; margin: 64px auto 0; }
 .remote .phones figure { margin: 0; display: grid; gap: 16px; justify-items: center; text-align: center; }
@@ -163,7 +163,18 @@ section.band { padding-block: clamp(80px, 11vw, 160px); }
 .remote .phones figcaption b { display: block; font-weight: 600; font-size: 1.05rem; }
 .remote .phones figcaption span { color: var(--soft); font-size: .93rem; line-height: 1.45; }
 .remote .beta { display: inline-block; margin-left: 8px; padding: 2px 9px; border-radius: 999px; font-size: .78rem; font-weight: 600; vertical-align: middle; background: rgba(194,48,106,.18); color: #f08ab0; }
-@media (max-width: 900px) { .remote .stage-r { aspect-ratio: 16 / 11; } .remote .laptop { width: 92%; } .remote .phone.p1 { width: 30%; top: auto; bottom: 0; } .remote .phones { grid-template-columns: 1fr; max-width: 280px; } }
+@media (max-width: 900px) {
+  .remote .stage-r { aspect-ratio: 16 / 11; } .remote .laptop { width: 92%; } .remote .phone.p1 { width: 30%; top: auto; bottom: 0; }
+  /* the three phones: a gallery that scrolls sideways, the next one peeking in */
+  .remote .phones { position: relative; display: flex; gap: 18px; max-width: none; margin-left: -16px; margin-right: -16px; width: calc(100% + 32px); padding: 0 16px 8px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .remote .phones::-webkit-scrollbar { display: none; }
+  .remote .phones figure { flex: 0 0 62%; scroll-snap-align: center; }
+  .remote .phones .phone { max-width: none; }
+  .remote .phones + .dots { display: flex; }
+}
+.remote .dots { display: none; justify-content: center; gap: 8px; margin-top: 14px; }
+.remote .dots i { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.25); transition: background .25s; }
+.remote .dots i.on { background: rgba(255,255,255,.85); }
 
 /* app feature sections */
 .feature .shot { margin-top: 56px; width: 100%; border-radius: var(--r); overflow: hidden; box-shadow: 0 0 0 1px var(--line), 0 50px 100px -40px var(--glow); }
@@ -447,6 +458,7 @@ footer strong { color: var(--soft); font-weight: 600; }
         <figure><div class="phone"><img src="img/remote-notes.jpg" alt="The current slide with presenter notes" width="540" height="1171" loading="lazy"></div><figcaption><b>Your notes in hand</b><span>Presenter notes under the slide, in the size you like, light or dark.</span></figcaption></figure>
         <figure><div class="phone"><img src="img/remote-pen.jpg" alt="The highlighter with a laser pointer and colours" width="540" height="1171" loading="lazy"></div><figcaption><b>Point and draw</b><span>A laser pointer and highlighter that show up on the big screen as you draw.</span></figcaption></figure>
       </div>
+      <div class="dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
       <div class="tiles">
         <div class="ftile"><b>Finds your computer</b><span>On the same Wi-Fi, your computer shows up by itself. No addresses to type.</span></div>
         <div class="ftile"><b>Linked with a code</b><span>Match a 4-digit code once, and the phone reconnects every time after.</span></div>
@@ -794,6 +806,18 @@ footer strong { color: var(--soft); font-weight: 600; }
     main.href = B + "Bramble-Office-macos-apple-silicon.zip"; main.textContent = "Download for Mac";
     note.textContent = "For Apple silicon Macs · Intel Mac? Use the Intel download below";
   }
+})();
+</script>
+<script>
+// Keydeck Remote gallery: the dot under the phone that's centred
+(function () {
+  var g = document.querySelector('.remote .phones'), dots = document.querySelectorAll('.remote .dots i');
+  if (!g || !dots.length) return;
+  g.addEventListener('scroll', function () {
+    var c = g.scrollLeft + g.clientWidth / 2, best = 0, d = 1e9;
+    g.querySelectorAll('figure').forEach(function (f, i) { var m = Math.abs(f.offsetLeft + f.offsetWidth / 2 - c); if (m < d) { d = m; best = i; } });
+    dots.forEach(function (x, i) { x.classList.toggle('on', i === best); });
+  }, { passive: true });
 })();
 </script>
 </body>
