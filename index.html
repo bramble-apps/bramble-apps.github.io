@@ -148,6 +148,23 @@ section.band { padding-block: clamp(80px, 11vw, 160px); }
 .app-card p { color: var(--soft); font-size: .98rem; }
 .app-card .idx { position: absolute; top: 22px; right: 24px; }
 
+/* Keydeck Remote */
+.remote .stage-r { position: relative; width: 100%; max-width: 1040px; margin: 56px auto 0; aspect-ratio: 16 / 9.6; }
+.remote .laptop { position: absolute; left: 0; top: 4%; width: 78%; }
+.remote .screen { border-radius: 14px 14px 4px 4px; background: #0b0b0d; padding: 1.6% 1.6% 2.2%; box-shadow: 0 0 0 1px var(--line), 0 60px 120px -40px var(--glow); }
+.remote .screen img { display: block; width: 100%; height: auto; border-radius: 3px; }
+.remote .base { height: 14px; margin: 0 -5%; border-radius: 0 0 14px 14px; background: linear-gradient(#2a2a2e, #161618); box-shadow: 0 1px 0 rgba(255,255,255,.06) inset; }
+.remote .phone { position: absolute; width: 24%; border-radius: 34px; padding: 9px; background: #18181b; box-shadow: 0 0 0 1px rgba(255,255,255,.14), 0 40px 80px rgba(0,0,0,.75); }
+.remote .phone img { display: block; width: 100%; height: auto; border-radius: 26px; }
+.remote .phone.p1 { right: 0; top: 0; z-index: 2; }
+.remote .phones { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; width: 100%; max-width: 860px; margin: 64px auto 0; }
+.remote .phones figure { margin: 0; display: grid; gap: 16px; justify-items: center; text-align: center; }
+.remote .phones .phone { position: static; width: 100%; max-width: 250px; }
+.remote .phones figcaption b { display: block; font-weight: 600; font-size: 1.05rem; }
+.remote .phones figcaption span { color: var(--soft); font-size: .93rem; line-height: 1.45; }
+.remote .beta { display: inline-block; margin-left: 8px; padding: 2px 9px; border-radius: 999px; font-size: .78rem; font-weight: 600; vertical-align: middle; background: rgba(194,48,106,.18); color: #f08ab0; }
+@media (max-width: 900px) { .remote .stage-r { aspect-ratio: 16 / 11; } .remote .laptop { width: 92%; } .remote .phone.p1 { width: 30%; top: auto; bottom: 0; } .remote .phones { grid-template-columns: 1fr; max-width: 280px; } }
+
 /* app feature sections */
 .feature .shot { margin-top: 56px; width: 100%; border-radius: var(--r); overflow: hidden; box-shadow: 0 0 0 1px var(--line), 0 50px 100px -40px var(--glow); }
 .feature .shot img { display: block; width: 100%; height: auto; }
@@ -353,7 +370,7 @@ footer strong { color: var(--soft); font-weight: 600; }
 </header>
 
 <nav class="rail" aria-label="On this page">
-  <a href="#top" data-sec="top">00 Intro</a><a href="#apps" data-sec="apps">01 Apps</a><a href="#keydeck" data-sec="keydeck">02 Keydeck</a><a href="#values" data-sec="values">03 Values</a><a href="#letters" data-sec="letters">04 Letters</a><a href="#formats" data-sec="formats">05 Formats</a><a href="#deep" data-sec="deep">06 Deep end</a><a href="#themes" data-sec="themes">07 Themes</a><a href="#faq" data-sec="faq">10 FAQ</a><a href="#next" data-sec="next">11 Next</a>
+  <a href="#top" data-sec="top">00 Intro</a><a href="#apps" data-sec="apps">01 Apps</a><a href="#keydeck" data-sec="keydeck">02 Keydeck</a><a href="#remote" data-sec="remote">Remote</a><a href="#values" data-sec="values">03 Values</a><a href="#letters" data-sec="letters">04 Letters</a><a href="#formats" data-sec="formats">05 Formats</a><a href="#deep" data-sec="deep">06 Deep end</a><a href="#themes" data-sec="themes">07 Themes</a><a href="#faq" data-sec="faq">10 FAQ</a><a href="#next" data-sec="next">11 Next</a>
 </nav>
 
 <main>
@@ -412,6 +429,29 @@ footer strong { color: var(--soft); font-weight: 600; }
         <div class="ftile"><b>Slide layouts</b><span>Dynamic backgrounds, tables with formulas, charts.</span></div>
         <div class="ftile"><b>PowerPoint both ways</b><span>Opens .pptx decks and exports back to PowerPoint.</span></div>
         <div class="ftile"><b>Share it anywhere</b><span>Export a movie, an animated GIF, images or a PDF.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band feature remote" id="remote" style="--glow:rgba(194,48,106,.5);padding-top:0">
+    <div class="wrap center reveal">
+      <div class="app-title"><img src="img/keydeck.png" alt="" width="56" height="56"><span>Keydeck Remote<span class="beta">Beta</span></span></div>
+      <h2 class="big">Your phone is the <em class="s">remote</em>.</h2>
+      <p class="sub">Run your slideshow from Keydeck for Android. Move through slides, read your notes and point at what matters, from anywhere in the room.</p>
+      <div class="stage-r">
+        <div class="laptop"><div class="screen"><img src="img/remote-slide.jpg" alt="A slide playing full screen in Keydeck on a computer" width="1280" height="720" loading="lazy"></div><div class="base"></div></div>
+        <div class="phone p1"><img src="img/remote-next.jpg" alt="Keydeck Remote on a phone showing the current slide, the next slide and a timer" width="540" height="1171" loading="lazy"></div>
+      </div>
+      <div class="phones">
+        <figure><div class="phone"><img src="img/remote-next.jpg" alt="Current and next slide with the timer" width="540" height="1171" loading="lazy"></div><figcaption><b>See what's next</b><span>The current slide, the next one and a timer or clock. Swipe or tap to move on.</span></figcaption></figure>
+        <figure><div class="phone"><img src="img/remote-notes.jpg" alt="The current slide with presenter notes" width="540" height="1171" loading="lazy"></div><figcaption><b>Your notes in hand</b><span>Presenter notes under the slide, in the size you like, light or dark.</span></figcaption></figure>
+        <figure><div class="phone"><img src="img/remote-pen.jpg" alt="The highlighter with a laser pointer and colours" width="540" height="1171" loading="lazy"></div><figcaption><b>Point and draw</b><span>A laser pointer and highlighter that show up on the big screen as you draw.</span></figcaption></figure>
+      </div>
+      <div class="tiles">
+        <div class="ftile"><b>Finds your computer</b><span>On the same Wi-Fi, your computer shows up by itself. No addresses to type.</span></div>
+        <div class="ftile"><b>Linked with a code</b><span>Match a 4-digit code once, and the phone reconnects every time after.</span></div>
+        <div class="ftile"><b>Jump anywhere</b><span>Tap the slide number to pick any slide; tap the timer for the clock.</span></div>
+        <div class="ftile"><b>Five layouts</b><span>Current, next and notes in any mix, so you see exactly what you need.</span></div>
       </div>
     </div>
   </section>
@@ -566,7 +606,7 @@ footer strong { color: var(--soft); font-weight: 600; }
       <p class="sub">These are features being planned or considered. Vote for the ones you want, or ask for something new.</p>
       <div class="next two">
         <div class="ncard tilt"><span class="tag">Potential</span><b>Community extensions</b><span>Add tools from other people to the toolbar, such as grammar checkers, translators and AI writing helpers. Drag, hide or remove them like any other button.</span></div>
-        <div class="ncard tilt"><span class="tag">Early development</span><b>Android app</b><span>Keydeck, Values and Letters on Android phones and tablets, opening the same files as the desktop apps: out now with a touch layout for phones and tablets, and Keydeck doubles as a remote for presenting from your computer. Still to come: more polish, and Google Play.</span></div>
+        <div class="ncard tilt"><span class="tag">Beta</span><b>Android app</b><span>Keydeck, Values and Letters on Android phones and tablets, opening the same files as the desktop apps: out now with a touch layout for phones and tablets, and Keydeck doubles as a remote for presenting from your computer. Still to come: more polish, and Google Play.</span></div>
       </div>
       <div class="ctas" style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:12px"><a class="pill solid" href="features.html">See all and vote</a><a class="pill ghost" href="features.html#ask">Request a feature</a></div>
     </div>
@@ -598,7 +638,7 @@ footer strong { color: var(--soft); font-weight: 600; }
             <a class="dl-alt" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Bramble-Office-linux-x86_64.tar.gz">or all three as a .tar.gz</a>
           </div>
           <div class="dl-card" data-os="android">
-            <h3>Android <span class="early">Early development</span></h3><p>Android 8 and later, phones and tablets. Keydeck is also the remote for your computer. Expect rough edges.</p>
+            <h3>Android <span class="early">Beta</span></h3><p>Android 8 and later, phones and tablets. Keydeck is also the remote for your computer. Expect rough edges.</p>
             <a class="pill ghost" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Keydeck-android.apk">Keydeck</a>
             <a class="pill ghost" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Values-android.apk">Values</a>
             <a class="pill ghost" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Letters-android.apk">Letters</a>
@@ -749,7 +789,7 @@ footer strong { color: var(--soft); font-weight: 600; }
   if (card) card.classList.add("mine");
   if (os === "windows") { main.href = B + "Bramble-Office-windows-x86_64.zip"; main.textContent = "Download for Windows"; }
   if (os === "linux") { main.href = B + "Bramble-Office-linux-x86_64.tar.gz"; main.textContent = "Download for Linux"; note.textContent = "All three apps · or pick an AppImage below"; }
-  if (os === "android") { note.textContent = "Android: early development versions below"; }
+  if (os === "android") { note.textContent = "Android: beta versions below"; }
   if (os === "mac") {
     main.href = B + "Bramble-Office-macos-apple-silicon.zip"; main.textContent = "Download for Mac";
     note.textContent = "For Apple silicon Macs · Intel Mac? Use the Intel download below";
