@@ -329,6 +329,30 @@ footer strong { color: var(--soft); font-weight: 600; }
 .gallery img { width: clamp(260px, 34vw, 460px); height: auto; border-radius: var(--r); box-shadow: 0 0 0 1px var(--line); }
 .gallery:hover .run2 { animation-play-state: paused; }
 
+/* "No font? No problem.": the built-in stand-ins for Apple fonts, each in its own face
+   (fonts/: just the letters on the cards, with each font's licence) */
+@font-face { font-family: "Sfera"; src: url(fonts/sfera.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "Helvetia Neue"; src: url(fonts/helvetia-neue.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "Avelon Next"; src: url(fonts/avelon-next.woff2) format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Futurae"; src: url(fonts/futurae.woff2) format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "New Yorkshire"; src: url(fonts/new-yorkshire.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "Gilles Sans"; src: url(fonts/gilles-sans.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "Optika"; src: url(fonts/optika.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "ANRT Baskerville"; src: url(fonts/anrt-baskerville.woff2) format("woff2"); font-style: italic; font-display: swap; }
+@font-face { font-family: "Hellas Didot"; src: url(fonts/hellas-didot.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "Lucido Grande"; src: url(fonts/lucido-grande.woff2) format("woff2"); font-display: swap; }
+.nofont { margin-top: clamp(90px, 11vw, 150px); }
+.nofont h3 { font-size: clamp(2rem, 1.2rem + 3vw, 3.6rem); letter-spacing: -0.03em; line-height: 1.05; }
+.fontstrip { overflow: hidden; margin-top: 44px; mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+.fontstrip .run3 { display: flex; gap: 16px; padding-right: 16px; width: max-content; animation: run 70s linear infinite; }
+/* (the cards twice, the gap after the last too, so half the strip is exactly one set) */
+.fontstrip:hover .run3 { animation-play-state: paused; }
+.fcard { width: clamp(230px, 24vw, 320px); background: var(--tile); border-radius: var(--r); box-shadow: inset 0 0 0 1px var(--line); padding: 24px 24px 26px; display: grid; gap: 14px; align-content: start; }
+.fcard .for { font: 500 .7rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
+.fcard .for b { font-weight: 500; color: var(--warm-b); }
+.fcard .name { font-size: clamp(1.8rem, 1.4rem + 1.2vw, 2.4rem); line-height: 1.05; color: var(--text); }
+.fcard .line { font-size: 1.08rem; line-height: 1.35; color: var(--soft); }
+
 /* the pair words swap places */
 .swap { display: inline-grid; vertical-align: bottom; overflow: hidden; height: 1.1em; }
 .swap b { grid-area: 1 / 1; font-weight: 600; animation: swapA 6s cubic-bezier(.7,0,.2,1) infinite; }
@@ -516,6 +540,34 @@ footer strong { color: var(--soft); font-weight: 600; }
           <div class="pair"><span class="swap"><b>Pages</b><b>Word</b></span> <i>and</i> <span class="swap"><b>Word</b><b>Pages</b></span></div>
           <p class="also">.pages and .docx, plus RTF, Markdown, HTML, plain text, EPUB and PDF.</p></div>
       </div>
+    </div>
+    <div class="nofont">
+      <div class="wrap center reveal">
+        <h3>No font? <em class="s">No problem.</em></h3>
+        <p class="sub">Every app has look-alikes of Apple's fonts built in, with the same letter widths. A document made on a Mac breaks its lines and pages in exactly the same places, even without the original fonts.</p>
+      </div>
+      <div class="fontstrip"><div class="run3">
+        <div class="fcard"><span class="for">For <b>SF Pro</b></span><span class="name" style="font-family:'Sfera'">Sfera</span><span class="line" style="font-family:'Sfera'">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard"><span class="for">For <b>Helvetica Neue</b></span><span class="name" style="font-family:'Helvetia Neue'">Helvetia Neue</span><span class="line" style="font-family:'Helvetia Neue'">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard"><span class="for">For <b>Avenir Next</b></span><span class="name" style="font-family:'Avelon Next';font-weight:600">Avelon Next</span><span class="line" style="font-family:'Avelon Next';font-weight:600">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard"><span class="for">For <b>Futura</b></span><span class="name" style="font-family:'Futurae';font-weight:500">Futurae</span><span class="line" style="font-family:'Futurae';font-weight:500">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard"><span class="for">For <b>New York</b></span><span class="name" style="font-family:'New Yorkshire'">New Yorkshire</span><span class="line" style="font-family:'New Yorkshire'">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard"><span class="for">For <b>Gill Sans</b></span><span class="name" style="font-family:'Gilles Sans'">Gilles Sans</span><span class="line" style="font-family:'Gilles Sans'">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard"><span class="for">For <b>Optima</b></span><span class="name" style="font-family:'Optika'">Optika</span><span class="line" style="font-family:'Optika'">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard"><span class="for">For <b>Baskerville</b></span><span class="name" style="font-family:'ANRT Baskerville';font-style:italic">ANRT Baskerville</span><span class="line" style="font-family:'ANRT Baskerville';font-style:italic">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard"><span class="for">For <b>Didot</b></span><span class="name" style="font-family:'Hellas Didot'">Hellas Didot</span><span class="line" style="font-family:'Hellas Didot'">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard"><span class="for">For <b>Lucida Grande</b></span><span class="name" style="font-family:'Lucido Grande'">Lucido Grande</span><span class="line" style="font-family:'Lucido Grande'">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard" aria-hidden="true"><span class="for">For <b>SF Pro</b></span><span class="name" style="font-family:'Sfera'">Sfera</span><span class="line" style="font-family:'Sfera'">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard" aria-hidden="true"><span class="for">For <b>Helvetica Neue</b></span><span class="name" style="font-family:'Helvetia Neue'">Helvetia Neue</span><span class="line" style="font-family:'Helvetia Neue'">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard" aria-hidden="true"><span class="for">For <b>Avenir Next</b></span><span class="name" style="font-family:'Avelon Next';font-weight:600">Avelon Next</span><span class="line" style="font-family:'Avelon Next';font-weight:600">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard" aria-hidden="true"><span class="for">For <b>Futura</b></span><span class="name" style="font-family:'Futurae';font-weight:500">Futurae</span><span class="line" style="font-family:'Futurae';font-weight:500">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard" aria-hidden="true"><span class="for">For <b>New York</b></span><span class="name" style="font-family:'New Yorkshire'">New Yorkshire</span><span class="line" style="font-family:'New Yorkshire'">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard" aria-hidden="true"><span class="for">For <b>Gill Sans</b></span><span class="name" style="font-family:'Gilles Sans'">Gilles Sans</span><span class="line" style="font-family:'Gilles Sans'">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard" aria-hidden="true"><span class="for">For <b>Optima</b></span><span class="name" style="font-family:'Optika'">Optika</span><span class="line" style="font-family:'Optika'">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard" aria-hidden="true"><span class="for">For <b>Baskerville</b></span><span class="name" style="font-family:'ANRT Baskerville';font-style:italic">ANRT Baskerville</span><span class="line" style="font-family:'ANRT Baskerville';font-style:italic">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard" aria-hidden="true"><span class="for">For <b>Didot</b></span><span class="name" style="font-family:'Hellas Didot'">Hellas Didot</span><span class="line" style="font-family:'Hellas Didot'">Lines break exactly where they did on a Mac.</span></div>
+        <div class="fcard" aria-hidden="true"><span class="for">For <b>Lucida Grande</b></span><span class="name" style="font-family:'Lucido Grande'">Lucido Grande</span><span class="line" style="font-family:'Lucido Grande'">Lines break exactly where they did on a Mac.</span></div>
+      </div></div>
     </div>
   </section>
 
