@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Add Bramble Office's Android apps to Obtainium, so they install and update straight from the GitHub releases.">
+<link rel="icon" href="logo/bramble-mark.svg" type="image/svg+xml">
+<link rel="canonical" href="https://bramble-apps.github.io/obtainium.html">
+<meta name="robots" content="noindex, follow">
+<title>Get Bramble on Obtainium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Obtainium hand-off: "Get it on Obtainium" badges (README, index.html) land here with ?app=…
+   This page builds the obtainium://app link itself, so no third-party redirect (ads, analytics). */
+:root {
+  --bg: #000; --tile: #141416; --text: #f5f5f7; --soft: #a1a1a6; --dim: #6e6e73;
+  --line: rgba(255,255,255,.1); --r: 14px;
+  --display: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--bg); color: var(--text); margin: 0; }
+body { font: 400 1rem/1.55 var(--display); padding: 0 16px; }
+main { max-width: 620px; margin: 0 auto; padding: 56px 0 72px; }
+a { color: inherit; }
+.top { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--soft); font-weight: 600; margin-bottom: 40px; }
+.top img { width: 20px; height: 26px; }
+h1 { font-size: clamp(1.8rem, 6vw, 2.6rem); line-height: 1.1; margin: 0 0 12px; letter-spacing: -.02em; }
+p { color: var(--soft); margin: 0 0 16px; }
+.app { display: flex; align-items: center; gap: 16px; background: var(--tile); border-radius: var(--r); padding: 16px; margin: 28px 0; }
+.app img { width: 64px; height: 64px; border-radius: 14px; }
+.app b { display: block; font-size: 1.2rem; }
+.app span { color: var(--dim); font-size: .9rem; }
+.pill { display: inline-flex; align-items: center; justify-content: center; padding: 14px 24px; border-radius: var(--r); font: 600 1rem/1 var(--display); text-decoration: none; cursor: pointer; }
+.pill.solid { background: var(--text); color: #000; }
+.pill.ghost { color: var(--text); box-shadow: inset 0 0 0 1px rgba(255,255,255,.3); }
+.row { display: flex; flex-wrap: wrap; gap: 12px; margin: 8px 0 32px; }
+.pick { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; margin: 24px 0 32px; }
+.pick a { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 8px; background: var(--tile); border-radius: var(--r); text-decoration: none; font-weight: 600; }
+.pick a img { width: 48px; height: 48px; }
+h2 { font-size: 1.1rem; margin: 40px 0 10px; }
+ol { color: var(--soft); padding-left: 1.3em; }
+li { margin-bottom: 8px; }
+code { font: 500 .88em var(--mono); background: var(--tile); padding: 2px 6px; border-radius: 6px; color: var(--text); word-break: break-all; }
+.note { font-size: .9rem; color: var(--dim); border-top: 1px solid var(--line); padding-top: 20px; margin-top: 40px; }
+</style>
+</head>
+<body>
+<main>
+  <a class="top" href="./"><img src="logo/bramble-mark.svg" alt="">Bramble Office</a>
+  <h1 id="title">Get Bramble on Obtainium</h1>
+  <p id="lead">Obtainium installs Android apps straight from their GitHub releases and keeps them up to date. Pick an app, or add all four at once.</p>
+
+  <div id="chosen" hidden>
+    <div class="app"><img id="icon" alt=""><div><b id="name"></b><span id="file"></span></div></div>
+    <div class="row">
+      <a class="pill solid" id="open">Open in Obtainium</a>
+      <a class="pill ghost" href="https://github.com/ImranR98/Obtainium/releases/latest">Get Obtainium first</a>
+    </div>
+  </div>
+
+  <div class="pick" id="pick"></div>
+
+  <h2>How it works</h2>
+  <ol>
+    <li>Install Obtainium if you don't have it yet, from <a href="https://github.com/ImranR98/Obtainium/releases/latest">its GitHub releases</a> (the <code>app-arm64-v8a-release.apk</code> file) or from F-Droid.</li>
+    <li>On your phone or tablet, tap <b>Open in Obtainium</b>. Obtainium asks whether to import the app: confirm it.</li>
+    <li>Open the app in Obtainium and tap <b>Install</b>. From then on, Obtainium tells you when a new version is out.</li>
+  </ol>
+
+  <h2>Adding it by hand</h2>
+  <p>In Obtainium, tap <b>Add App</b>, paste <code>https://github.com/bramble-apps/bramble-office</code>, and set <b>Filter APKs by regular expression</b> to the app's file:</p>
+  <ol id="manual"></ol>
+
+  <p class="note">The Android apps are in beta: expect some bugs, and keep copies of important files. They need Android 8 or later on a 64-bit ARM device. Obtainium is a separate open-source project, not part of Bramble Office.</p>
+</main>
+<script>
+(function () {
+  var REPO = "https://github.com/bramble-apps/bramble-office";
+  var APPS = {
+    keydeck: { id: "app.bramble.keydeck", name: "Keydeck", file: "Keydeck-android.apk", icon: "img/keydeck.png" },
+    values:  { id: "app.bramble.values",  name: "Values",  file: "Values-android.apk",  icon: "img/values.png" },
+    letters: { id: "app.bramble.letters", name: "Letters", file: "Letters-android.apk", icon: "img/letters.png" },
+    notes:   { id: "app.bramble.notes",   name: "Bramble Notes", file: "Bramble-Notes-android.apk", icon: "img/notes.png" }
+  };
+  // The JSON Obtainium's import reads (lib/models/app.dart App.fromJson); additionalSettings is
+  // itself a JSON string. The APK filter picks this app's file out of the shared release.
+  function config(a) {
+    return {
+      id: a.id, url: REPO, author: "Bramble Office", name: a.name, preferredApkIndex: 0,
+      additionalSettings: JSON.stringify({ apkFilterRegEx: "^" + a.file.replace(/\./g, "\\.") + "$" })
+    };
+  }
+  function link(key) {
+    if (key === "all") {
+      return "obtainium://apps/" + encodeURIComponent(JSON.stringify(Object.keys(APPS).map(function (k) { return config(APPS[k]); })));
+    }
+    return "obtainium://app/" + encodeURIComponent(JSON.stringify(config(APPS[key])));
+  }
+
+  var pick = document.getElementById("pick"), manual = document.getElementById("manual");
+  Object.keys(APPS).concat("all").forEach(function (k) {
+    var a = document.createElement("a");
+    a.href = "?app=" + k;
+    if (k === "all") { a.textContent = "All four apps"; }
+    else {
+      var img = document.createElement("img"); img.src = APPS[k].icon; img.alt = "";
+      a.appendChild(img); a.appendChild(document.createTextNode(APPS[k].name));
+      var li = document.createElement("li");
+      li.innerHTML = "<b>" + APPS[k].name + ":</b> <code>^" + APPS[k].file.replace(/\./g, "\\.") + "$</code>";
+      manual.appendChild(li);
+    }
+    pick.appendChild(a);
+  });
+
+  var key = new URLSearchParams(location.search).get("app");
+  if (!key || !(key === "all" || APPS[key])) return;
+  var a = APPS[key];
+  document.getElementById("chosen").hidden = false;
+  document.getElementById("title").textContent = key === "all" ? "All four apps on Obtainium" : a.name + " on Obtainium";
+  document.getElementById("lead").textContent = "Tap Open in Obtainium on your Android phone or tablet. If nothing happens, install Obtainium first, then come back and tap it again.";
+  document.getElementById("icon").src = key === "all" ? "logo/bramble-mark.svg" : a.icon;
+  document.getElementById("name").textContent = key === "all" ? "Keydeck, Values, Letters and Bramble Notes" : a.name;
+  document.getElementById("file").textContent = key === "all" ? "Each installs its own APK from the latest release" : a.file + " from the latest release";
+  var href = link(key);
+  document.getElementById("open").href = href;
+  if (/Android/.test(navigator.userAgent)) { location.href = href; }
+})();
+</script>
+</body>
+</html>
