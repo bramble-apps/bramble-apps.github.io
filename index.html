@@ -686,7 +686,7 @@ footer strong { color: var(--soft); font-weight: 600; }
       <div class="get center reveal">
         <svg class="mark" viewBox="0 0 597 777" aria-hidden="true"><use href="#berry"/></svg>
         <h2 class="big">Linux, Windows <em class="s">and</em> macOS.</h2>
-        <p class="sub">Free and open source. Keydeck, Values and Letters, for every desktop.</p>
+        <p class="sub">Free and open source. Keydeck, Values, Letters and Bramble Notes, for every desktop.</p>
         <a class="pill solid big-dl" id="dl-main" href="https://github.com/bramble-apps/bramble-office/releases/latest">Download Bramble Office</a>
         <p class="dl-note" id="dl-note">Version 0.1 · GPL-3.0 · no account needed</p>
         <div class="dl-grid">
@@ -705,7 +705,12 @@ footer strong { color: var(--soft); font-weight: 600; }
             <a class="pill ghost" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Values-x86_64.AppImage">Values</a>
             <a class="pill ghost" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Letters-x86_64.AppImage">Letters</a>
             <a class="pill ghost" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Bramble-Notes-x86_64.AppImage">Notes</a>
-            <a class="dl-alt" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Bramble-Office-linux-x86_64.tar.gz">or all three as a .tar.gz</a>
+            <p style="margin-top:10px">Flatpak bundles, one per app</p>
+            <a class="pill ghost" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Keydeck-x86_64.flatpak">Keydeck</a>
+            <a class="pill ghost" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Values-x86_64.flatpak">Values</a>
+            <a class="pill ghost" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Letters-x86_64.flatpak">Letters</a>
+            <a class="pill ghost" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Bramble-Notes-x86_64.flatpak">Notes</a>
+            <a class="dl-alt" href="https://github.com/bramble-apps/bramble-office/releases/latest/download/Bramble-Office-linux-x86_64.tar.gz">or all four as a .tar.gz</a>
           </div>
           <div class="dl-card" data-os="android">
             <h3>Android <span class="early">Beta</span></h3><p>Android 8 and later, phones and tablets. Keydeck is also the remote for your computer. Expect rough edges.</p>
@@ -861,7 +866,7 @@ footer strong { color: var(--soft); font-weight: 600; }
   var card = document.querySelector('.dl-card[data-os="' + os + '"]');
   if (card) card.classList.add("mine");
   if (os === "windows") { main.href = B + "Bramble-Office-windows-x86_64.zip"; main.textContent = "Download for Windows"; }
-  if (os === "linux") { main.href = B + "Bramble-Office-linux-x86_64.tar.gz"; main.textContent = "Download for Linux"; note.textContent = "All three apps · or pick an AppImage below"; }
+  if (os === "linux") { main.href = B + "Bramble-Office-linux-x86_64.tar.gz"; main.textContent = "Download for Linux"; note.textContent = "All four apps · or pick an AppImage or Flatpak below"; }
   if (os === "android") { note.textContent = "Android: beta versions below"; }
   if (os === "mac") {
     main.href = B + "Bramble-Office-macos-apple-silicon.zip"; main.textContent = "Download for Mac";
